@@ -1,0 +1,68 @@
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time:  500000 
+
+runner: "parallel"
+batch_size_run: 8
+buffer_size: 5000
+batch_size: 128
+
+# update the target network every {} episodes
+target_update_interval: 200
+
+# major 
+mac: 'n_mac'
+agent: 'n_rnn'
+weighted_qmix_threshold: 0.1
+weighted_qmix_weight: 1
+weighted_qmix_weight_finish: 1
+weighted_qmix_weight_anneal_time: 1000000
+other_actions_weight: 0
+only_optimal_action: False
+no_weighted_steps: 100000
+use_lambda_hypernetwork: True
+
+central_mixer: 'ff'
+central_mac: 'basic_central_mac'
+central_agent: 'central_rnn'
+central_action_embed: 1
+central_mixing_embed_dim: 64          # QMixerCentralFF
+
+# use the Q_Learner to train
+agent_output_type: "q"
+learner: "powqmix_learner"
+double_q: True
+td_lambda: 0.6
+lr: 0.001
+
+qmixer: "vdn"
+mixing_embed_dim: 32          # nmix
+hypernet_embed: 64            # nmix
+
+mixer: "pow_mixer"
+lambda_mixing_embed_dim: 64         # pow_mixer
+lambda_hypernet_embed_dim: 128      # pow_mixer
+lambda_weights_abs: True
+v_embed_dim: 128                    # pow_mixer v_embed_dim
+
+use_per: False
+per_optimal: False
+no_per_weight: False
+
+use_layer_norm: False
+use_orthogonal: False
+
+num_kernel: 4
+is_minus_one: True
+weighted_head: True
+is_adv_attention: True
+is_stop_gradient: True
+use_lambda_hypernet: True
+     # 
+adv_hypernet_layers: 3    # dmaq_si_weight
+adv_hypernet_embed: 64    # 
+
+
+name: "pow_vdn"

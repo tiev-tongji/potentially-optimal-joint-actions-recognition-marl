@@ -1,0 +1,56 @@
+# --- Defaults for 4x4 predator prey 4 agent capture walls ---
+
+env: "intersec"
+
+env_args:
+    observation: 
+        type: "MultiAgentObservation"
+        observation_config: 
+            type: "KinematicsWithRoute"
+            vehicles_count: 4
+            features: ["x", "y", "vx", "vy", "heading"]
+            features_range: 
+                x: [-100, 100]
+                y: [-100, 100]
+                vx: [-200, 200]
+                vy: [-200, 200]
+            absolute: False # relative to observer_vehicle or not
+            order: "sorted" # sorted by lane distance 
+            normalize: False
+            clip: False
+    action: 
+        type: "MultiAgentAction"
+        action_config: 
+            type: "DiscreteMetaAction"
+            longitudinal: True
+            lateral: False
+            target_speeds: [0, 2, 4, 6, 8, 10] # must have equal gap
+    controlled_vehicles: 4
+    initial_vehicle_count: 0 # useless
+    spawn_probability: -1. # random vehicles
+    simulation_frequency: 5 # env internal calculation frequency
+    policy_frequency: 5 # env.step() frequency
+    duration: 20 # unit seconds
+    manual_control: False
+    other_vehicles_type: "envs.highway_env.vehicle.behavior.IDMVehicle"
+    
+    collision_reward: -1
+    high_speed_reward: 0.2
+    lane_change_reward: -0.05
+    right_lane_reward: 0.1
+    merging_speed_reward: -0.5
+    ma_arrive_reward: 100
+    ma_collision_reward: -100
+
+    offscreen_rendering: False
+    real_time_rendering: False # rendering on simulation_frequency
+    render_agent: True
+    scaling: 5.5
+    centering_position: [0.5, 0.5]
+    screen_height: 800
+    screen_width: 800
+    show_trajectories: False
+    use_route_traj_points: False
+    map_name: "intersection"
+
+t_max: 5000000
